@@ -1,13 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-public class GameManager : MonoBehaviour {
+using Assets.Scripts;
+
+public class GameManager : MonoBehaviour
+{
 
     int teamNumber;
     int selectedClass;
     int selectedRPS;
     int currentMenuScreen = 0;
+    int currentClassCount = 0;
 
     bool classSelected = false;
     bool rpsSelected = false;
@@ -20,32 +28,41 @@ public class GameManager : MonoBehaviour {
     public GameObject inGameButtons;
     public GameObject pausedButtons;
 
+    public GameObject lostPanel;
+    public GameObject snakePanel;
+
+    public Button possumReviveButton;
+
     public Text selectedColorText;
     public Text choiceAlertText;
 
+    public Text selectAnimalText;
+    public Text selectRPSText;
+    public Text snakeText;
+
+    public int classCountBeforeReselect = 3;
+
     [Header("Buttons")]
-    public GameObject[] classButtons;
-    public GameObject[] rpsButtons;
+    public Button[] classButtons;
+    public Button[] rpsButtons;
 
     [Header("UI Colors")]
     public Color selectedColor;
     public Color selectedAndConfirmedColor;
+    public Color defaultDisableColor;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         // disable menus
         infoMenu.SetActive(false);
         colorSelectMenu.SetActive(false);
         classSelectMenu.SetActive(false);
+        lostPanel.SetActive(false);
+        snakePanel.SetActive(false);
         // enable menus
         titleMenu.SetActive(true);
-        
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     public void setTeamNumber(int number)
     {
@@ -54,7 +71,8 @@ public class GameManager : MonoBehaviour {
         if (teamNumber == 1)
         {
             selectedColorText.text = "Rood";
-        } else if (teamNumber == 2)
+        }
+        else if (teamNumber == 2)
         {
             selectedColorText.text = "Geel";
         }
@@ -82,8 +100,8 @@ public class GameManager : MonoBehaviour {
     public void goToColorSelect()
     {
         selectedColorText.text = "";
-       // disable menus
-       titleMenu.SetActive(false);
+        // disable menus
+        titleMenu.SetActive(false);
         infoMenu.SetActive(false);
         classSelectMenu.SetActive(false);
         // enable menus
@@ -115,16 +133,8 @@ public class GameManager : MonoBehaviour {
     // Button toggles & stuff
     public void disableClassButtons(int buttonNumber)
     {
-        for (var i = 0; i < classButtons.Length; i++) {
-            //classButtons[i].SetActive(false);
-
-            Button currentButton = classButtons[i].GetComponent<Button>();
-            ColorBlock cb = currentButton.colors;
-            cb.normalColor = Color.gray;
-            currentButton.colors = cb;
-            //currentButton.colors.normalColor = new Color(0.22f, 0.22f, 0.22f, 1f);
-        }
-        classButtons[buttonNumber].SetActive(true);
+        DisableButtonColors(classButtons.ToList());
+        classButtons[buttonNumber].gameObject.SetActive(true);
 
         Button currentButton2 = classButtons[buttonNumber].GetComponent<Button>();
         ColorBlock cb2 = currentButton2.colors;
@@ -138,17 +148,8 @@ public class GameManager : MonoBehaviour {
     }
     public void disableRPSButtons(int buttonNumber)
     {
-
-        for (var i = 0; i < rpsButtons.Length; i++)
-        {
-           // rpsButtons[i].SetActive(false);
-
-            Button currentButton = rpsButtons[i].GetComponent<Button>();
-            ColorBlock cb = currentButton.colors;
-            cb.normalColor = Color.gray;
-            currentButton.colors = cb;
-        }
-        rpsButtons[buttonNumber].SetActive(true);
+        DisableButtonColors(rpsButtons.ToList());
+        rpsButtons[buttonNumber].gameObject.SetActive(true);
 
         Button currentButton2 = rpsButtons[buttonNumber].GetComponent<Button>();
         ColorBlock cb2 = currentButton2.colors;
@@ -159,52 +160,158 @@ public class GameManager : MonoBehaviour {
 
         rpsSelected = true;
     }
+    private void DisableButtonColors(List<Button> buttons)
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            ColorBlock cb = buttons[i].colors;
+            cb.normalColor = Color.gray;
+            cb.disabledColor = this.defaultDisableColor;
+            buttons[i].colors = cb;
+        }
+    }
+
+
 
     public void confirmChoice()
     {
         choiceAlertText.text = "";
         if (classSelected && rpsSelected)
         {
-            for (var i = 0; i < rpsButtons.Length; i++)
+            for (int i = 0; i < rpsButtons.Length; i++)
             {
                 Button currentButton = rpsButtons[i].GetComponent<Button>();
                 currentButton.interactable = false;
             }
-            for (var i = 0; i < classButtons.Length; i++)
+            for (int i = 0; i < classButtons.Length; i++)
             {
                 Button currentButton = classButtons[i].GetComponent<Button>();
                 currentButton.interactable = false;
             }
+            if (currentClassCount >= classCountBeforeReselect)
+                currentClassCount = 0;
 
+            selectAnimalText.gameObject.SetActive(false);
+            selectRPSText.gameObject.SetActive(false);
             inGameButtons.SetActive(true);
             pausedButtons.SetActive(false);
-            // TO DO: Terug en OK button weg, Respawn & stop button aan, class change timer activeren.
         }
         else
         {
             choiceAlertText.text = "Kies een class & soort!";
         }
     }
-    public void stop()
+
+
+
+    public void AllowSelection()
+    {
+        selectAnimalText.gameObject.SetActive(true);
+        selectRPSText.gameObject.SetActive(true);
+
+        if (currentClassCount >= classCountBeforeReselect)
+        {
+            classSelected = false;
+            selectAnimalText.text = "Kies dier";
+            for (int i = 0; i < classButtons.Length; i++)
+            {
+                Button currentButton = classButtons[i].GetComponent<Button>();
+                ResetButton(currentButton);
+            }
+        }
+        else
+        {
+            Debug.Log("Mag nog geen dier kiezen " + currentClassCount);
+            selectAnimalText.text = String.Format("Pas over: {0} respawn", classCountBeforeReselect - currentClassCount);
+        }
+
+        rpsSelected = false;
+        for (int i = 0; i < rpsButtons.Length; i++)
+        {
+            Button currentButton = rpsButtons[i].GetComponent<Button>();
+            ResetButton(currentButton);
+            // button color handler nodig, elke button is groen wanneer ze allemaal een keer aageklikt zijn
+        }
+    }
+    private static void ResetButton(Button currentButton)
+    {
+        currentButton.interactable = true;
+
+        ColorBlock cb = currentButton.colors;
+        cb.normalColor = Color.white;
+        cb.highlightedColor = Color.green;
+        currentButton.colors = cb;
+    }
+
+    public void Won()
+    {
+        if (selectedClass == 2) // slang
+        {
+            this.snakeText.text = String.Format("Wil je <color=#00ffffff>{0}</color> behouden of veranderen naar <color=#00ffffff>{1}</color>",
+                Helpers.RPSToString(selectedRPS), Helpers.RPSToString(Helpers.LosesOf(selectedRPS)));
+            snakePanel.SetActive(true);
+        }
+        else
+            BackToSelection();
+    }
+
+    public void SnakeKeep()
+    {
+        BackToSelection();
+    }
+    public void SnakeSwitch()
+    {
+        SetEatenElement();
+        BackToSelection();
+    }
+
+    private void SetEatenElement()
+    {
+        selectedRPS = Helpers.LosesOf(selectedRPS);
+    }
+
+    public void Lost()
+    {
+        possumReviveButton.gameObject.SetActive(selectedClass == 0);
+        lostPanel.SetActive(true);
+    }
+
+    public void Respawn()
+    {
+        currentClassCount++;
+        lostPanel.SetActive(false);
+        BackToSelection();
+        AllowSelection();
+    }
+
+    public void RespawnPossum()
+    {
+        lostPanel.SetActive(false);
+        BackToSelection();
+    }
+
+    private void BackToSelection()
     {
         pausedButtons.SetActive(true);
         inGameButtons.SetActive(false);
+        snakePanel.SetActive(false);
+        UpdateButtonsSelected();
+    }
 
-        for (var i = 0; i < rpsButtons.Length; i++)
+    // ORDER IN LIST OF BUTTONS MATTER ALOT
+    private void UpdateButtonsSelected()
+    {
+        for (int i = 0; i < classButtons.Length; i++)
         {
-            Button currentButton = rpsButtons[i].GetComponent<Button>();
-            currentButton.interactable = true;
-            
-           // button color handler nodig, elke button is groen wanneer ze allemaal een keer aageklikt zijn
+            if (i != selectedClass) continue;
+            disableClassButtons(i);
+            break;
         }
-        for (var i = 0; i < classButtons.Length; i++)
+        for (int i = 0; i < rpsButtons.Length; i++)
         {
-            Button currentButton = classButtons[i].GetComponent<Button>();
-            currentButton.interactable = true;
-            
-            ColorBlock cb = currentButton.colors;
-            cb.normalColor = Color.white;
-            currentButton.colors = cb;
+            if (i != selectedRPS) continue;
+            disableRPSButtons(i);
+            break;
         }
     }
 }
