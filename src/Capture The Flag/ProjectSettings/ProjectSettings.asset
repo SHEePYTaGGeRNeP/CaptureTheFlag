@@ -344,11 +344,11 @@ PlayerSettings:
   scriptingDefineSymbols: {}
   metroPackageName: Capture The Flag
   metroPackageVersion: 
-  metroCertificatePath: 
+  metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: 
-  metroCertificateIssuer: 
-  metroCertificateNotAfter: 0000000000000000
+  metroCertificateSubject: Fontys
+  metroCertificateIssuer: Fontys
+  metroCertificateNotAfter: 005838300d3fd301
   metroApplicationDescription: Capture The Flag
   wsaImages: {}
   metroTileShortName: 
@@ -410,6 +410,7 @@ PlayerSettings:
   XboxOnePersistentLocalStorageSize: 0
   intPropertyNames:
   - Android::ScriptingBackend
+  - Metro::ScriptingBackend
   - Standalone::ScriptingBackend
   - WebGL::ScriptingBackend
   - WebGL::audioCompressionFormat
@@ -417,6 +418,7 @@ PlayerSettings:
   - WebGL::memorySize
   - WebPlayer::ScriptingBackend
   Android::ScriptingBackend: 0
+  Metro::ScriptingBackend: 2
   Standalone::ScriptingBackend: 0
   WebGL::ScriptingBackend: 1
   WebGL::audioCompressionFormat: 4
