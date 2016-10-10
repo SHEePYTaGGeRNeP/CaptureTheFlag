@@ -231,8 +231,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Effecten van dieren worden genegeerd. Wie wint of verliest hangt af van
-    steen, papier of schaar.
+  m_Text: De boswachter maakt alle dieren onschadelijk. De effecten van dieren worden
+    genegeerd.
 --- !u!222 &5883765
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2148,7 +2148,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &640487821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4427,7 +4427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1098744353
 MonoBehaviour:
   m_ObjectHideFlags: 0
