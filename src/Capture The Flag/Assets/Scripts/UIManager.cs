@@ -7,28 +7,21 @@ public class UIManager : MonoBehaviour
 {
 
     public List<GameObject> Menus = new List<GameObject>();
-
-    public GameObject inGameButtons;
-    public GameObject pausedButtons;
-
-    public GameObject lostPanel;
-    public GameObject snakePanel;
-
-    public Button possumReviveButton;
-
+    
     public Text selectTeamText;
     public Button selectTeamButton;
-    public Text choiceAlertText;
 
+    public Text selectClassTitle;
+    public Text selectClassDescription;
+    public Button selectClassButton;
+
+    public Button selectChoiceButton;
+    public Button possumReviveButton;
     public Text selectAnimalText;
     public Text selectRPSText;
     public Text snakeText;
-
-    public int classCountBeforeReselect = 3;
+    
     public GameManager Game;
-    [Header("Buttons")]
-    public Button[] classButtons;
-    public Button[] rpsButtons;
     // Use this for initialization
     void Start ()
     {
@@ -91,13 +84,20 @@ public class UIManager : MonoBehaviour
 
     public void goToClassSelect()
     {
+        selectClassButton.interactable = false;
         ShowMenu(3);
         //currentMenuScreen = 3;
     }
 
     public void goToRPSChoice()
     {
+        selectChoiceButton.interactable = false;
         ShowMenu(4);
+    }
+
+    public void goToFightScreen()
+    {
+        
     }
 
     public void SetTeamNumber(int id)
@@ -108,6 +108,15 @@ public class UIManager : MonoBehaviour
 
     public void SetClass(int id)
     {
+
+        selectClassButton.interactable = true;
         Game.Player.clas = Game.GetClass(id);
+        selectClassTitle.text = Game.Player.clas.className;
+        selectClassDescription.text = Game.Player.clas.description;
+    }
+
+    public void SetChoice(int id)
+    {
+        Game.Player.Choice = (Choice) id;
     }
 }

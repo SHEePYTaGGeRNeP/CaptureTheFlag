@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class Class : MonoBehaviour {
 
     public long Id;
-    private string className;
-    private string description;
-    private Image image;
+    public string className;
+    public string description;
+    public Texture2D image;
 
     // Use this for initialization
     void Start () {
