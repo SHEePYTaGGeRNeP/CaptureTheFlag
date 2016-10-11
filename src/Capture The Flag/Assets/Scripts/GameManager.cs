@@ -10,7 +10,8 @@ using Assets.Scripts;
 
 public class GameManager : MonoBehaviour
 {
-
+    public List<Team> Teams;
+    public List<Class> Classes;
     int teamNumber;
     int selectedClass;
     int selectedRPS;
@@ -42,12 +43,10 @@ public class GameManager : MonoBehaviour
 
     public int classCountBeforeReselect = 3;
 
-    [Header("Buttons")]
-    public Button[] classButtons;
+    [Header("Buttons")] public Button[] classButtons;
     public Button[] rpsButtons;
 
-    [Header("UI Colors")]
-    public Color selectedColor;
+    [Header("UI Colors")] public Color selectedColor;
     public Color selectedAndConfirmedColor;
     public Color defaultDisableColor;
 
@@ -77,6 +76,7 @@ public class GameManager : MonoBehaviour
             selectedColorText.text = "Geel";
         }
     }
+
     public void goToTitleMenu()
     {
         // disable menus
@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
         titleMenu.SetActive(true);
         currentMenuScreen = 0;
     }
+
     public void goToInfo()
     {
         // disable menus
@@ -97,6 +98,7 @@ public class GameManager : MonoBehaviour
         infoMenu.SetActive(true);
         currentMenuScreen = 1;
     }
+
     public void goToColorSelect()
     {
         selectedColorText.text = "";
@@ -108,6 +110,7 @@ public class GameManager : MonoBehaviour
         colorSelectMenu.SetActive(true);
         currentMenuScreen = 2;
     }
+
     public void goToClassSelect()
     {
         if (teamNumber == 0)
@@ -125,6 +128,7 @@ public class GameManager : MonoBehaviour
     {
         selectedClass = ClassNumber;
     }
+
     public void setRPS(int RPSNumber)
     {
         selectedRPS = RPSNumber;
@@ -146,6 +150,7 @@ public class GameManager : MonoBehaviour
         classSelected = true;
 
     }
+
     public void disableRPSButtons(int buttonNumber)
     {
         DisableButtonColors(rpsButtons.ToList());
@@ -160,6 +165,7 @@ public class GameManager : MonoBehaviour
 
         rpsSelected = true;
     }
+
     private void DisableButtonColors(List<Button> buttons)
     {
         for (int i = 0; i < buttons.Count; i++)
@@ -233,6 +239,7 @@ public class GameManager : MonoBehaviour
             // button color handler nodig, elke button is groen wanneer ze allemaal een keer aageklikt zijn
         }
     }
+
     private static void ResetButton(Button currentButton)
     {
         currentButton.interactable = true;
@@ -247,8 +254,10 @@ public class GameManager : MonoBehaviour
     {
         if (selectedClass == 2) // slang
         {
-            this.snakeText.text = String.Format("Wil je <color=#00ffffff>{0}</color> behouden of veranderen naar <color=#00ffffff>{1}</color>",
-                Helpers.RPSToString(selectedRPS), Helpers.RPSToString(Helpers.LosesOf(selectedRPS)));
+            this.snakeText.text =
+                String.Format(
+                    "Wil je <color=#00ffffff>{0}</color> behouden of veranderen naar <color=#00ffffff>{1}</color>",
+                    Helpers.RPSToString(selectedRPS), Helpers.RPSToString(Helpers.LosesOf(selectedRPS)));
             snakePanel.SetActive(true);
         }
         else
@@ -259,6 +268,7 @@ public class GameManager : MonoBehaviour
     {
         BackToSelection();
     }
+
     public void SnakeSwitch()
     {
         SetEatenElement();
@@ -312,6 +322,42 @@ public class GameManager : MonoBehaviour
             if (i != selectedRPS) continue;
             disableRPSButtons(i);
             break;
+        }
+    }
+
+    public Team GetTeam(long teamId)
+    {
+        foreach (Team team in Teams)
+        {
+            if (team.Id == teamId)
+                return team;
+        }
+        return null;
+    }
+
+    public Class GetClass(long classId)
+    {
+        foreach (Class clas in Classes)
+        {
+            if (clas.Id == classId)
+                return clas;
+        }
+        return null;
+    }
+
+    public Player GetWinner(Player player, Player oponent)
+    {
+        int compareInt = player.CompareTo(oponent);
+        switch (compareInt)
+        {
+            case -1:
+                return player;
+            case 0:
+                return null;
+            case 1:
+                return oponent;
+            default:
+                return null;
         }
     }
 }
