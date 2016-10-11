@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Runtime.CompilerServices;
 using Assets.Scripts;
 
 public class GameManager : MonoBehaviour
@@ -17,10 +17,10 @@ public class GameManager : MonoBehaviour
     int selectedRPS;
     int currentMenuScreen = 0;
     int currentClassCount = 0;
-
+    public Player Player;
     bool classSelected = false;
     bool rpsSelected = false;
-
+    public UIManager UI;
     public GameObject titleMenu;
     public GameObject infoMenu;
     public GameObject colorSelectMenu;
@@ -53,14 +53,10 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // disable menus
-        infoMenu.SetActive(false);
-        colorSelectMenu.SetActive(false);
-        classSelectMenu.SetActive(false);
-        lostPanel.SetActive(false);
-        snakePanel.SetActive(false);
-        // enable menus
-        titleMenu.SetActive(true);
+        UI = transform.GetComponent<UIManager>();
+        Player = transform.GetComponent<Player>();
+        UI.HideMenus();
+        UI.ShowMenu(0);
     }
 
     public void setTeamNumber(int number)
@@ -89,7 +85,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void goToInfo()
-    {
+    {   
         // disable menus
         titleMenu.SetActive(false);
         colorSelectMenu.SetActive(false);

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using com.google.zxing;
+using com.google.zxing.qrcode;
 using ZXing;
 
 public class QRManager : MonoBehaviour {
@@ -16,9 +18,10 @@ public class QRManager : MonoBehaviour {
 
     Texture2D GenerateQRCode(string text)
     {
-        BarcodeWriter barcodeWriter = new BarcodeWriter();
-
-        barcodeWriter.Write("hoi");
+        
+        QRCodeWriter qr = new QRCodeWriter();
+        //qr.encode("hoi", BarcodeFormat.QR_CODE, 128, 128)
+        //Texture2D.LoadImage(;
         return null;
     }
 

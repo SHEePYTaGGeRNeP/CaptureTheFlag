@@ -7,9 +7,9 @@ using System.Security.Principal;
 public class Player : MonoBehaviour, IComparable<Player>
 {
     public long Id;
-    private string playerName;
-    private Team team;
-    private Class clas;
+    public string playerName;
+    public Team team;
+    public Class clas;
     public Choice Choice;
     private GameManager gameManager;
     private List<Player> wins;
