@@ -8,13 +8,9 @@ using com.google.zxing.qrcode;
 
 public class qrCam : MonoBehaviour
 {
-    [SerializeField]
-    private Text _text;
-    [SerializeField]
-    private RawImage _rawImage;
-
-    [SerializeField]
-    private Slider _slider;
+	[SerializeField]
+	private Text _text;
+	private Renderer _planeRenderer;
 
     private WebCamTexture camTexture;
 
@@ -49,11 +45,14 @@ public class qrCam : MonoBehaviour
         Debug.Log("OnDestroy");
         this.camTexture.Stop();
     }
-
+	private void Awake()
+	{
+		this._planeRenderer = this.GetComponent<Renderer> ();
+	}
     private void Start()
     {
         this.camTexture = new WebCamTexture();
-        this._rawImage.texture = this.camTexture;
+		this._planeRenderer.material.mainTexture = this.camTexture;
         this.OnEnable();
     }
 
@@ -61,11 +60,6 @@ public class qrCam : MonoBehaviour
     {
         this.c = this.camTexture.GetPixels32();
         this.DecodeQR();
-    }
-
-    public void UpdateSlider()
-    {
-        this._rawImage.transform.rotation = Quaternion.AngleAxis(this.camTexture.videoRotationAngle * this._slider.value, Vector3.right);
     }
 
     private void DecodeQR()
@@ -83,7 +77,8 @@ public class qrCam : MonoBehaviour
             }
             string decoded = this.qrReader.decode(this.d, this.W, this.H).Text;
             print(decoded);
-            this._text.text = decoded;
+			if (this._text != null)
+				this._text.text = decoded;
         }
         catch
         { // ignore -> Alot of exceptions are thrown.
