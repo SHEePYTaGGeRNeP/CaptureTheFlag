@@ -5,10 +5,10 @@ using UnityEngine.UI;
 public class Team : MonoBehaviour
 {
     public long Id;
-    private string teamName;
-    private string description;
-    private Image image;
-    private Color color;
+    public string teamName;
+    public string description;
+    public Texture2D image;
+    public Color color;
     
 
 	// Use this for initialization
