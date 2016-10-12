@@ -210,6 +210,7 @@ public class UIManager : MonoBehaviour
         ShowMenu(6);
         battleCanvas = false;
         respawnCanvas = true;
+        RespawnQRCode.sprite = QrCode.sprite;
         Debug.Log(Game.Player.clas);
         Debug.Log(Game.Player.clas.Id);
         if (Game.Player.clas.Id == 1)

@@ -54,5 +54,6 @@ MonoBehaviour:
   Id: 1
   teamName: Team Oost
   description: 
+  Tag: TeamOost
   image: {fileID: 21300000, guid: 139f9df256183de4cb80778d3e628ae5, type: 3}
   color: {r: 0.24705884, g: 0.24705884, b: 0.24705884, a: 0}
