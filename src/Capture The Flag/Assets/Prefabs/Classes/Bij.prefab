@@ -55,4 +55,4 @@ MonoBehaviour:
   className: Bij
   description: Je mag geen tegenstanders aantikken, maar als iemand jou aantikt zijn
     jullie allbei af.
-  image: {fileID: 2800000, guid: 5892b229baf7519498ab952b7242a9fc, type: 3}
+  image: {fileID: 21300000, guid: 5892b229baf7519498ab952b7242a9fc, type: 3}

@@ -14,18 +14,27 @@ public class GameManager : MonoBehaviour
     public List<Class> Classes;
     public Player Player;
     public UIManager UI;
+    public QRManager QR;
    
     // Use this for initialization
     void Start()
     {
         UI = transform.GetComponent<UIManager>();
         Player = transform.GetComponent<Player>();
+        QR = transform.GetComponent<QRManager>();
         UI.HideMenus();
         UI.ShowMenu(0);
     }
 
+    public Player GetPlayer(string qrCode)
+    {
+        Player player;
+        if (qrCode != null)
+            player = new Player(qrCode);
+        return Player;
+    }
 
-
+    
 
 
 

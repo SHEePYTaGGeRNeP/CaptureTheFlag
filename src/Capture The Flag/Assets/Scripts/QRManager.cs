@@ -19,7 +19,8 @@ public class QRManager : MonoBehaviour {
 
    public Sprite GenerateQRCode(string text)
     {
-        string trimmedText = text.Trim(new System.Char[] { ':'});
+        string trimmedText = text.Replace(":","");
+        Debug.Log(trimmedText);
         foreach(Sprite code in QRCodes)
         {
             if (code.name == trimmedText)

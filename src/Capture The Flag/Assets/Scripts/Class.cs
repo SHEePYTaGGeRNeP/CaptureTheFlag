@@ -8,7 +8,7 @@ public class Class : MonoBehaviour {
     public long Id;
     public string className;
     public string description;
-    public Texture2D image;
+    public Sprite image;
 
     // Use this for initialization
     void Start () {

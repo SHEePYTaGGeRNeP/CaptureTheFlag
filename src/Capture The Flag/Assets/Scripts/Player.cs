@@ -25,7 +25,7 @@ public class Player : MonoBehaviour, IComparable<Player>
         team = gameManager.GetTeam(teamId);
         long classId = Int64.Parse(playerStringSplit[3]);
         clas = gameManager.GetClass(classId);
-        Choice = (Choice) Enum.Parse(typeof(Choice), playerStringSplit[4]);
+        Choice = (Choice)Int64.Parse(playerStringSplit[4]);
 
 
     }
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour, IComparable<Player>
 
     public override string ToString()
     {
-        return Id + ":" + playerName + ":" + team.Id + ":" + clas.Id + ":" + Choice;
+        return Id + ":" + playerName + ":" + team.Id + ":" + clas.Id + ":" + (int)Choice;
     }
 
 }

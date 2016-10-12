@@ -56,4 +56,4 @@ MonoBehaviour:
   description: Als je verliest, mag je op de grond gaan liggen en kan je weer meedoen
     als iemand van je eigen team je aantikt. Je hoeft dit niet te doen. Je kunt ook
     gewoon teruglopen.
-  image: {fileID: 2800000, guid: e72722eb26329bb429de001f8a33c816, type: 3}
+  image: {fileID: 21300000, guid: e72722eb26329bb429de001f8a33c816, type: 3}

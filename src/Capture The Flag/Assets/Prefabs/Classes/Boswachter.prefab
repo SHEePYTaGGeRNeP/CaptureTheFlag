@@ -55,4 +55,4 @@ MonoBehaviour:
   className: Boswachter
   description: De boswachter maakt alle dieren onschadelijk. De effecten van dieren
     worden genegeerd.
-  image: {fileID: 2800000, guid: be1d37b36382ddd45b1f3be939e22708, type: 3}
+  image: {fileID: 21300000, guid: be1d37b36382ddd45b1f3be939e22708, type: 3}

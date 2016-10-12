@@ -20,6 +20,21 @@ public class UIManager : MonoBehaviour
     public Text selectAnimalText;
     public Text selectRPSText;
     public Text snakeText;
+
+    public Image teamImage;
+    public Image classImage;
+    public Image QrCode;
+    public Image choiceImage;
+    public Text classTitle;
+    public Text classDescription;
+    public Text ChoiceTitle;
+
+    public Button scanButton;
+    public Text scanButtonText;
+    public bool scannerActive;
+
+    public qrCam qrcam;
+
     
     public GameManager Game;
     // Use this for initialization
@@ -30,7 +45,11 @@ public class UIManager : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (scannerActive)
+        {
+            if (qrcam.text != null)
+                Debug.Log(qrcam.text);
+        }
 	}
 
     public void ShowMenu(int index)
@@ -97,8 +116,31 @@ public class UIManager : MonoBehaviour
 
     public void goToFightScreen()
     {
-        
+        ShowMenu(5);
+        teamImage.sprite = Game.Player.team.image;
+        classImage.sprite = Game.Player.clas.image;
+        classTitle.text = Game.Player.clas.className;
+        classDescription.text = Game.Player.clas.description;
+        ChoiceTitle.text = System.Enum.GetName(Game.Player.Choice.GetType(), Game.Player.Choice-1);
+        QrCode.sprite = Game.QR.GenerateQRCode(Game.Player.ToString());
+        //choiceImage.sprite = 
     }
+
+    public void ToggleScanner()
+    {
+        if (!scannerActive)
+        {
+            qrcam.gameObject.SetActive(true);
+            scanButtonText.text = "Terug";
+        }
+        else
+        {
+            qrcam.gameObject.SetActive(false);
+            scanButtonText.text = "Scan";
+        }
+    }
+
+    
 
     public void SetTeamNumber(int id)
     {

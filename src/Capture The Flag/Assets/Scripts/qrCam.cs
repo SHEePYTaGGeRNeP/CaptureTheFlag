@@ -12,7 +12,7 @@ using com.google.zxing.common;
 public class qrCam : MonoBehaviour
 {
     [SerializeField]
-    private Text _text;
+    public string text;
 
     [SerializeField]
     private Texture2D _texture2D;
@@ -85,8 +85,7 @@ public class qrCam : MonoBehaviour
             }
             string decoded = this.qrReader.decode(this.d, this.W, this.H).Text;
             print(decoded);
-            if (this._text != null)
-                this._text.text = decoded;
+                this.text = decoded;
         }
         catch
         { // ignore -> Alot of exceptions are thrown.
