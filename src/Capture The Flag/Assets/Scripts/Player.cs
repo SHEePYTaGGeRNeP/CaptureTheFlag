@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Player : MonoBehaviour, IComparable<Player>
+public class Player : IComparable<Player>
 {
     public long Id;
     public string playerName;
@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IComparable<Player>
     private List<Player> looses;
 
 
-    public Player(String playerString)
+    public void Initialize(String playerString)
     {
         string[] playerStringSplit = playerString.Split(":".ToCharArray());
         Id = Int64.Parse(playerStringSplit[0]);
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour, IComparable<Player>
     // Use this for initialization
     void Start()
     {
-        GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame

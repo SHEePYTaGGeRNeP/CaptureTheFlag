@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public List<Team> Teams;
     public List<Class> Classes;
     public Player Player;
+    public Transform PlayerPrefab;
     public UIManager UI;
     public QRManager QR;
    
@@ -22,9 +23,8 @@ public class GameManager : MonoBehaviour
 
     public Player GetPlayer(string qrCode)
     {
-        Player player;
-        if (qrCode != null)
-            player = new Player(qrCode);
+        Player player = ((GameObject) GameObject.Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity)).GetComponent<Player>();
+        player.Initialize(qrCode);
         return Player;
     }
 
