@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Player : IComparable<Player>
+public class Player : MonoBehaviour, IComparable<Player>
 {
     public long Id;
     public string playerName;
@@ -28,7 +28,7 @@ public class Player : IComparable<Player>
     // Use this for initialization
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager = transform.GetComponent<GameManager>();
     }
 
     // Update is called once per frame

@@ -1496,7 +1496,9 @@ MonoBehaviour:
   - {fileID: 114000011313084728, guid: 91d9662d3c2084348a65a098b9ab5b89, type: 2}
   - {fileID: 114000010704797356, guid: 7ceee797b30d22146866d80e1b6a5a38, type: 2}
   - {fileID: 114000013640278022, guid: a0f0c587c39f7db4ab9a845b785c114d, type: 2}
-  Player: {fileID: 593009278}
+  Player: {fileID: 0}
+  PlayerPrefab: {fileID: 4000011062857258, guid: 851ddd1464703054ba8ee3fe398eed61,
+    type: 2}
   UI: {fileID: 593009276}
   QR: {fileID: 0}
 --- !u!114 &593009276
@@ -4211,7 +4213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1355734571
 MonoBehaviour:
   m_ObjectHideFlags: 0
