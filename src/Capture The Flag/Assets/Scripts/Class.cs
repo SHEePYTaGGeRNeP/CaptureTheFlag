@@ -1,9 +1,7 @@
-﻿
-using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-public class Class : MonoBehaviour {
+public class Class : MonoBehaviour
+{
 
     public long Id;
     public string className;
@@ -11,12 +9,14 @@ public class Class : MonoBehaviour {
     public Sprite image;
 
     // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

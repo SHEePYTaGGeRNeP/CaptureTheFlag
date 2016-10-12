@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Scripts;
+
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -28,6 +31,7 @@ public class UIManager : MonoBehaviour
     public Text classTitle;
     public Text classDescription;
     public Text ChoiceTitle;
+    public Text debugText;
 
     public Button scanButton;
     public Text scanButtonText;
@@ -35,22 +39,19 @@ public class UIManager : MonoBehaviour
 
     public qrCam qrcam;
 
+    public Sprite[] rpsSprites;
     
     public GameManager Game;
+
+    private bool battleCanvas;
+    private bool respawnCanvas;
+
     // Use this for initialization
     void Start ()
     {
         Game = transform.GetComponent<GameManager>();
     }
 	
-	// Update is called once per frame
-	void Update () {
-        if (scannerActive)
-        {
-            if (qrcam.text != null)
-                Debug.Log(qrcam.text);
-        }
-	}
 
     public void ShowMenu(int index)
     {
@@ -116,41 +117,75 @@ public class UIManager : MonoBehaviour
 
     public void goToFightScreen()
     {
+        battleCanvas = true;
         ShowMenu(5);
         teamImage.sprite = Game.Player.team.image;
         classImage.sprite = Game.Player.clas.image;
         classTitle.text = Game.Player.clas.className;
         classDescription.text = Game.Player.clas.description;
-        ChoiceTitle.text = System.Enum.GetName(Game.Player.Choice.GetType(), Game.Player.Choice-1);
+        ChoiceTitle.text = Helpers.RPSToString(Game.Player.Choice - 1);
+        choiceImage.sprite = rpsSprites[(int)Game.Player.Choice - 1];
         QrCode.sprite = Game.QR.GenerateQRCode(Game.Player.ToString());
-        //choiceImage.sprite = 
     }
 
     public void ToggleScanner()
     {
         if (!scannerActive)
         {
+            scannerActive = true;
             qrcam.gameObject.SetActive(true);
+            choiceImage.gameObject.SetActive(false);
+            ChoiceTitle.gameObject.SetActive(false);
+            QrCode.gameObject.SetActive(false);
             scanButtonText.text = "Terug";
+            qrcam.OnQRScan += OnQRScan;
         }
         else
         {
+            qrcam.OnQRScan -= OnQRScan;
+            scannerActive = false;
             qrcam.gameObject.SetActive(false);
+            choiceImage.gameObject.SetActive(true);
+            ChoiceTitle.gameObject.SetActive(true);
+            QrCode.gameObject.SetActive(true);
             scanButtonText.text = "Scan";
         }
     }
 
+    private void OnQRScan(string text)
+    {
+        if (debugText != null)
+            debugText.text = text;
+        Debug.Log(qrcam.text);
+        if (battleCanvas)
+        {
+            // scanning of other player's RPS
+        }
+        else if (respawnCanvas)
+        {
+            // Scanning of home base
+            // check own team
+        }
+    }
+
+    public void goToRespawnScreen()
+    {
+        battleCanvas = false;
+        respawnCanvas = true;
+
+    }
     
 
     public void SetTeamNumber(int id)
     {
         Game.Player.team = Game.GetTeam(id);   
         selectTeamButton.interactable = true;
+        if (this.selectTeamText != null)
+            this.selectTeamText.text = id == 1 ? "Team Oost" : "Team West";
     }
 
     public void SetClass(int id)
     {
-
         selectClassButton.interactable = true;
         Game.Player.clas = Game.GetClass(id);
         selectClassTitle.text = Game.Player.clas.className;

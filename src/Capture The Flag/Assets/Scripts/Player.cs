@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Principal;
 
 public class Player : MonoBehaviour, IComparable<Player>
 {
@@ -26,19 +24,18 @@ public class Player : MonoBehaviour, IComparable<Player>
         long classId = Int64.Parse(playerStringSplit[3]);
         clas = gameManager.GetClass(classId);
         Choice = (Choice)Int64.Parse(playerStringSplit[4]);
+    }
+    // Use this for initialization
+    void Start()
+    {
+        GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
 
     }
-	// Use this for initialization
-	void Start ()
-	{
-	    GameObject.Find("GameManager").GetComponent<GameManager>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     public int CompareTo(Player other)
     {

@@ -1,5 +1,7 @@
 ﻿namespace Assets.Scripts
 {
+    using System;
+
     class Helpers
     {
         public static int LosesOf(int nr)
@@ -11,14 +13,19 @@
                 default: return 1;
             }
         }
-        
-        public static string RPSToString(int nr)
+
+        public static string RPSToString(Choice choice)
         {
-            switch (nr)
+            switch (choice)
             {
-                case 0: return "Steen";
-                case 1: return "Papier";
-                default: return "Schaar";
+                case Choice.Rock:
+                    return "Vuur";
+                case Choice.Paper:
+                    return "Water";
+                case Choice.Scissors:
+                    return "Boom";
+                default:
+                    throw new ArgumentOutOfRangeException("choice", choice, null);
             }
         }
     }

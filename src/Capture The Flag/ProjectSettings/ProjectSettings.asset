@@ -11,7 +11,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Fontys
-  productName: Beestenboel
+  productName: Bosbeesten
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenStyle: 0
@@ -94,7 +94,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleIdentifier: com.Fontys.Beestenboel
+  bundleIdentifier: com.Fontys.Bosbeesten
   bundleVersion: 1.0
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
@@ -180,7 +180,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: be1d37b36382ddd45b1f3be939e22708, type: 3}
+      m_Icon: {fileID: 2800000, guid: e72722eb26329bb429de001f8a33c816, type: 3}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching: []

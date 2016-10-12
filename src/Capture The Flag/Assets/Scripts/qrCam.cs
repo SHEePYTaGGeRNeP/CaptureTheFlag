@@ -1,8 +1,5 @@
-using System;
-
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading;
 
 using com.google.zxing.qrcode;
 using System.Collections;
@@ -11,7 +8,9 @@ using com.google.zxing.common;
 
 public class qrCam : MonoBehaviour
 {
-    [SerializeField]
+    public delegate void QRScanHandler(string text);
+    public event QRScanHandler OnQRScan;
+
     public string text;
 
     [SerializeField]
@@ -85,7 +84,10 @@ public class qrCam : MonoBehaviour
             }
             string decoded = this.qrReader.decode(this.d, this.W, this.H).Text;
             print(decoded);
-                this.text = decoded;
+            if (OnQRScan != null)
+                OnQRScan.Invoke(decoded);
+            if(this.text != null)
+            this.text = decoded;
         }
         catch
         { // ignore -> Alot of exceptions are thrown.
@@ -118,9 +120,9 @@ public class qrCam : MonoBehaviour
         tex.Apply();
         Debug.Log(colors[0]);
         int countWHite = colors.Count(cx => cx == Color.white);
-        int countBlack = colors.Count(cx=> cx == Color.black);
-        Debug.Log("white: "+ countWHite  + "  black: " + countBlack);
-        sprite = Sprite.Create(tex,new Rect(0,0,100,100),Vector2.zero );
+        int countBlack = colors.Count(cx => cx == Color.black);
+        Debug.Log("white: " + countWHite + "  black: " + countBlack);
+        sprite = Sprite.Create(tex, new Rect(0, 0, 100, 100), Vector2.zero);
         transform.GetComponent<Image>().sprite = sprite;
         //Bitmap bmp1 = new Bitmap(byteIMGNew.Width, byteIMGNew.Height);
         //Graphics g1 = Graphics.FromImage(bmp1);
