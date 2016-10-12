@@ -52,6 +52,16 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    public Team GetTeamByTag(string tag)
+    {
+        foreach (Team team in Teams)
+        {
+            if (team.tag == tag)
+                return team;
+        }
+        return null;
+    }
+
     public Class GetClass(long classId)
     {
         foreach (Class clas in Classes)

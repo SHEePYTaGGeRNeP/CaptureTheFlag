@@ -39,6 +39,8 @@ public class Player : MonoBehaviour, IComparable<Player>
 
     public int CompareTo(Player other)
     {
+        if (clas.Id == 2 || other.clas.Id == 2)
+            return 0;
         switch (Choice)
         {
             case Choice.Rock:

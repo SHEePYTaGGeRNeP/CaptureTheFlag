@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Assets.Scripts;
 
 using UnityEngine.UI;
+using System;
 
 public class UIManager : MonoBehaviour
 {
@@ -32,11 +33,16 @@ public class UIManager : MonoBehaviour
     public Text classDescription;
     public Text ChoiceTitle;
     public Text debugText;
-
+    public Image RespawnQRCode;
+    public Text RespawnInfoText;
+    public Text RespawnWarningText;
+    public Text BuidelratRespawnInfoText;
+    public Button BuidelratButton;
     public Button scanButton;
     public Text scanButtonText;
     public bool scannerActive;
-
+    
+    
     public qrCam qrcam;
 
     public Sprite[] rpsSprites;
@@ -71,13 +77,14 @@ public class UIManager : MonoBehaviour
 
     public void ShowMenu(GameObject menu, bool hideOther)
     {
-        HideMenus();
+        HideMenus();     
         menu.SetActive(true);
 
     }
 
     public void HideMenus()
     {
+        qrcam.gameObject.SetActive(false);
         foreach (GameObject m in Menus)
         {
             m.SetActive(false);
@@ -152,6 +159,14 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void EnableScanner()
+    {
+        qrcam.gameObject.SetActive(true);
+        choiceImage.gameObject.SetActive(false);
+        ChoiceTitle.gameObject.SetActive(false);
+        QrCode.gameObject.SetActive(false);
+        qrcam.OnQRScan += OnQRScan;
+    }
     private void OnQRScan(string text)
     {
         if (debugText != null)
@@ -159,19 +174,58 @@ public class UIManager : MonoBehaviour
         Debug.Log(qrcam.text);
         if (battleCanvas)
         {
-            // scanning of other player's RPS
+            Player opponent = Game.GetPlayer(text);
+
+            if (opponent != null)
+            {
+                Player winner = Game.GetWinner(Game.Player, opponent);
+                if (Game.Player == winner)
+                {
+                    showWinMessage();
+                    if (Game.Player.clas.Id == 3)
+                        goToRPSChoice();
+                }
+                else
+                    goToRespawnScreen();
+            }
         }
         else if (respawnCanvas)
         {
-            // Scanning of home base
-            // check own team
+            if (Game.Player.team.Tag == text)
+                goToRPSChoice();
+            else if (Game.GetTeamByTag(text) != null)
+                RespawnWarningText.text = "Scan de code van je eigen team.";
+            else if (text.Contains("Player"))
+                RespawnWarningText.text = "Je kan geen spelers meer scannen als je af bent.";
         }
+    }
+
+    private void showWinMessage()
+    {
+        throw new NotImplementedException();
     }
 
     public void goToRespawnScreen()
     {
+        ShowMenu(6);
         battleCanvas = false;
         respawnCanvas = true;
+        Debug.Log(Game.Player.clas);
+        Debug.Log(Game.Player.clas.Id);
+        if (Game.Player.clas.Id == 1)
+        {
+            RespawnInfoText.text = "Je bent een buidelrat. Laat je tikken door een teamgenoot om verder te spelen of ga terug naar de startplaats van jouw team.";
+
+            BuidelratButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            BuidelratButton.gameObject.SetActive(false);
+            BuidelratButton.enabled = false;
+            RespawnInfoText.text = "Ga terug naar de startplaats van jouw team en scan de code om verder te spelen.";
+        }
+
+        
 
     }
     

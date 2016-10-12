@@ -7,6 +7,7 @@ public class Team : MonoBehaviour
     public long Id;
     public string teamName;
     public string description;
+    public string Tag;
     public Sprite image;
     public Color color;
     
