@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using com.google.zxing;
-using com.google.zxing.qrcode;
 using System.Collections.Generic;
 
 public class QRManager : MonoBehaviour {

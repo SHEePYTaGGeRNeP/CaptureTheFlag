@@ -118,6 +118,8 @@ public class UIManager : MonoBehaviour
 
     public void goToRPSChoice()
     {
+        respawnCanvas = false;
+        battleCanvas = false;
         selectChoiceButton.interactable = false;
         ShowMenu(4);
     }
@@ -130,8 +132,9 @@ public class UIManager : MonoBehaviour
         classImage.sprite = Game.Player.clas.image;
         classTitle.text = Game.Player.clas.className;
         classDescription.text = Game.Player.clas.description;
-        ChoiceTitle.text = Helpers.RPSToString(Game.Player.Choice - 1);
+        ChoiceTitle.text = Helpers.RPSToString(Game.Player.Choice);
         choiceImage.sprite = rpsSprites[(int)Game.Player.Choice - 1];
+        Debug.Log("Current player: " + Game.Player);
         QrCode.sprite = Game.QR.GenerateQRCode(Game.Player.ToString());
     }
 
@@ -139,24 +142,34 @@ public class UIManager : MonoBehaviour
     {
         if (!scannerActive)
         {
-            scannerActive = true;
-            qrcam.gameObject.SetActive(true);
-            choiceImage.gameObject.SetActive(false);
-            ChoiceTitle.gameObject.SetActive(false);
-            QrCode.gameObject.SetActive(false);
-            scanButtonText.text = "Terug";
-            qrcam.OnQRScan += OnQRScan;
+            TurnOnScanner();
         }
         else
         {
-            qrcam.OnQRScan -= OnQRScan;
-            scannerActive = false;
-            qrcam.gameObject.SetActive(false);
-            choiceImage.gameObject.SetActive(true);
-            ChoiceTitle.gameObject.SetActive(true);
-            QrCode.gameObject.SetActive(true);
-            scanButtonText.text = "Scan";
+            TurnOffScanner();
         }
+    }
+
+    private void TurnOnScanner()
+    {
+        scannerActive = true;
+        qrcam.gameObject.SetActive(true);
+        choiceImage.gameObject.SetActive(false);
+        ChoiceTitle.gameObject.SetActive(false);
+        QrCode.gameObject.SetActive(false);
+        scanButtonText.text = "Terug";
+        qrcam.OnQRScan += OnQRScan;
+    }
+
+    private void TurnOffScanner()
+    {
+        qrcam.OnQRScan -= OnQRScan;
+        scannerActive = false;
+        qrcam.gameObject.SetActive(false);
+        choiceImage.gameObject.SetActive(true);
+        ChoiceTitle.gameObject.SetActive(true);
+        QrCode.gameObject.SetActive(true);
+        scanButtonText.text = "Scan";
     }
 
     public void EnableScanner()
@@ -171,14 +184,19 @@ public class UIManager : MonoBehaviour
     {
         if (debugText != null)
             debugText.text = text;
-        Debug.Log(qrcam.text);
+        Debug.Log(text);
         if (battleCanvas)
         {
+            Debug.Log("battle canvas");
             Player opponent = Game.GetPlayer(text);
 
             if (opponent != null)
             {
+                Debug.Log("opponent: " + opponent);
+                TurnOffScanner();
                 Player winner = Game.GetWinner(Game.Player, opponent);
+                Debug.Log("Winner " + winner);
+                debugText.text = "Winner " + winner;
                 if (Game.Player == winner)
                 {
                     showWinMessage();
@@ -188,21 +206,37 @@ public class UIManager : MonoBehaviour
                 else
                     goToRespawnScreen();
             }
+            else
+            {// we scanned a different QR
+                Debug.Log("opponent is null ");
+                debugText.text = "opponent is null";
+            }
         }
         else if (respawnCanvas)
         {
+            Debug.Log("respawn canvas");
             if (Game.Player.team.Tag == text)
+            {
+                TurnOffScanner();
                 goToRPSChoice();
+            }
             else if (Game.GetTeamByTag(text) != null)
                 RespawnWarningText.text = "Scan de code van je eigen team.";
             else if (text.Contains("Player"))
                 RespawnWarningText.text = "Je kan geen spelers meer scannen als je af bent.";
         }
+        else
+        {
+            Debug.Log("No active canvas");
+            debugText.text = "No active canvas";
+        }
     }
 
     private void showWinMessage()
     {
-        throw new NotImplementedException();
+        Debug.Log("You won");
+        debugText.text = "You won";
+        //throw new NotImplementedException();
     }
 
     public void goToRespawnScreen()
@@ -249,6 +283,6 @@ public class UIManager : MonoBehaviour
 
     public void SetChoice(int id)
     {
-        Game.Player.Choice = (Choice) id;
+        Game.Player.Choice = (Choice)id;
     }
 }

@@ -53,6 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 3
   className: Slang
-  description: Wanneer je wint van je tegenstander kun je ervoor kiezen om zijn zijn
-    element over te nemen.
+  description: Wanneer je wint van je tegenstander mag je weer opnieuw een element
+    kiezen.
   image: {fileID: 21300000, guid: 2b31e6d5101ed214ba0c019540e7f5f4, type: 3}

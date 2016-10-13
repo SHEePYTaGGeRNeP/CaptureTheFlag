@@ -9,26 +9,34 @@ public class Player : MonoBehaviour, IComparable<Player>
     public Team team;
     public Class clas;
     public Choice Choice;
-    private GameManager gameManager;
+    public GameManager gameManager;
     private List<Player> wins;
     private List<Player> looses;
 
 
     public void Initialize(String playerString)
     {
-        string[] playerStringSplit = playerString.Split(":".ToCharArray());
-        Id = Int64.Parse(playerStringSplit[0]);
-        playerName = playerStringSplit[1];
-        long teamId = Int64.Parse(playerStringSplit[2]);
-        team = gameManager.GetTeam(teamId);
-        long classId = Int64.Parse(playerStringSplit[3]);
-        clas = gameManager.GetClass(classId);
-        Choice = (Choice)Int64.Parse(playerStringSplit[4]);
+        try
+        {
+            string[] playerStringSplit = playerString.Split(":".ToCharArray());
+            Id = Int64.Parse(playerStringSplit[0]);
+            playerName = playerStringSplit[1];
+            long teamId = Int64.Parse(playerStringSplit[2]);
+            team = gameManager.GetTeam(teamId);
+            long classId = Int64.Parse(playerStringSplit[3]);
+            clas = gameManager.GetClass(classId);
+            Choice = (Choice)Int64.Parse(playerStringSplit[4]);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError(ex);
+        }
     }
     // Use this for initialization
     void Start()
     {
-        gameManager = transform.GetComponent<GameManager>();
+        if (gameManager == null)
+            gameManager = transform.GetComponent<GameManager>();
     }
 
     // Update is called once per frame

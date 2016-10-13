@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +14,8 @@ public class qrCam : MonoBehaviour
     public event QRScanHandler OnQRScan;
 
     public string text;
+    [SerializeField]
+    private Text _debugText;
 
     [SerializeField]
     private Texture2D _texture2D;
@@ -82,11 +86,14 @@ public class qrCam : MonoBehaviour
                     this.d[this.z++] = (sbyte)(((int)this.c[this.y * this.W + this.x].r) << 16 | ((int)this.c[this.y * this.W + this.x].g) << 8 | ((int)this.c[this.y * this.W + this.x].b));
                 }
             }
-            string decoded = this.qrReader.decode(this.d, this.W, this.H).Text;
-            print(decoded);
+            // debug testing
+            string decoded = String.Empty;//  "1:Player:1:1:1";
+            if (String.IsNullOrEmpty(decoded))
+                decoded = this.qrReader.decode(this.d, this.W, this.H).Text;
+            if (this._debugText != null)
+                this._debugText.text = decoded;
             if (OnQRScan != null)
                 OnQRScan.Invoke(decoded);
-            if(this.text != null)
             this.text = decoded;
         }
         catch
