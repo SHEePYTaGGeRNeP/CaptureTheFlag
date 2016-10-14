@@ -87,7 +87,8 @@ public class qrCam : MonoBehaviour
                 }
             }
             // debug testing
-            string decoded = String.Empty;//  "1:Player:1:1:1";
+            string decoded = String.Empty;
+            //decoded = "1:Player:1:1:1";
             if (String.IsNullOrEmpty(decoded))
                 decoded = this.qrReader.decode(this.d, this.W, this.H).Text;
             if (this._debugText != null)

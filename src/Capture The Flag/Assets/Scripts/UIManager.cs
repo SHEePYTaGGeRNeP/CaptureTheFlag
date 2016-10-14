@@ -38,6 +38,8 @@ public class UIManager : MonoBehaviour
     public Text RespawnWarningText;
     public Text BuidelratRespawnInfoText;
     public Button BuidelratButton;
+    public GameObject InfoStuff;
+    public Button SlangButton;
     public Button scanButton;
     public Text scanButtonText;
     public bool scannerActive;
@@ -127,6 +129,8 @@ public class UIManager : MonoBehaviour
     public void goToFightScreen()
     {
         battleCanvas = true;
+        SlangButton.gameObject.SetActive(false);
+        InfoStuff.SetActive(true);
         ShowMenu(5);
         teamImage.sprite = Game.Player.team.image;
         classImage.sprite = Game.Player.clas.image;
@@ -158,6 +162,9 @@ public class UIManager : MonoBehaviour
         ChoiceTitle.gameObject.SetActive(false);
         QrCode.gameObject.SetActive(false);
         scanButtonText.text = "Terug";
+        BuidelratButton.gameObject.SetActive(false);
+        SlangButton.gameObject.SetActive(false);
+        RespawnQRCode.gameObject.SetActive(false);
         qrcam.OnQRScan += OnQRScan;
     }
 
@@ -170,6 +177,11 @@ public class UIManager : MonoBehaviour
         ChoiceTitle.gameObject.SetActive(true);
         QrCode.gameObject.SetActive(true);
         scanButtonText.text = "Scan";
+        if (Game.Player.clas.Id == 1)
+            BuidelratButton.gameObject.SetActive(true);
+        else if (Game.Player.clas.Id == 3)
+            SlangButton.gameObject.SetActive(true);
+        RespawnQRCode.gameObject.SetActive(true);
     }
 
     public void EnableScanner()
@@ -189,9 +201,11 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("battle canvas");
             Player opponent = Game.GetPlayer(text);
-
+            
             if (opponent != null)
             {
+                if (opponent.team == Game.Player.team)
+                    return;
                 Debug.Log("opponent: " + opponent);
                 TurnOffScanner();
                 Player winner = Game.GetWinner(Game.Player, opponent);
@@ -201,7 +215,11 @@ public class UIManager : MonoBehaviour
                 {
                     showWinMessage();
                     if (Game.Player.clas.Id == 3)
-                        goToRPSChoice();
+                    // enable button GOTORPS
+                    {
+                        SlangButton.gameObject.SetActive(true);
+                        InfoStuff.SetActive(false);
+                    }
                 }
                 else
                     goToRespawnScreen();
@@ -214,6 +232,7 @@ public class UIManager : MonoBehaviour
         }
         else if (respawnCanvas)
         {
+            debugText.text = "respawn canvas";
             Debug.Log("respawn canvas");
             if (Game.Player.team.Tag == text)
             {
@@ -221,9 +240,15 @@ public class UIManager : MonoBehaviour
                 goToRPSChoice();
             }
             else if (Game.GetTeamByTag(text) != null)
+            {
+               debugText.text = "Scan de code van je eigen team.";
                 RespawnWarningText.text = "Scan de code van je eigen team.";
+            }
             else if (text.Contains("Player"))
+            {
+                debugText.text = "Je kan geen spelers meer scannen als je af bent.";
                 RespawnWarningText.text = "Je kan geen spelers meer scannen als je af bent.";
+            }
         }
         else
         {
@@ -241,6 +266,7 @@ public class UIManager : MonoBehaviour
 
     public void goToRespawnScreen()
     {
+        debugText.text = "go to respawn";
         ShowMenu(6);
         battleCanvas = false;
         respawnCanvas = true;
@@ -253,9 +279,15 @@ public class UIManager : MonoBehaviour
 
             BuidelratButton.gameObject.SetActive(true);
         }
+        else if (Game.Player.clas.Id == 3)
+        {
+            BuidelratButton.gameObject.SetActive(false);
+            BuidelratButton.enabled = false;
+        }
         else
         {
             BuidelratButton.gameObject.SetActive(false);
+            SlangButton.gameObject.SetActive(false);
             BuidelratButton.enabled = false;
             RespawnInfoText.text = "Ga terug naar de startplaats van jouw team en scan de code om verder te spelen.";
         }

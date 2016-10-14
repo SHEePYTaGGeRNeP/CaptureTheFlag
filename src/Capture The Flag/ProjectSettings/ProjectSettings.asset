@@ -95,7 +95,7 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleIdentifier: com.Fontys.Bosbeesten
-  bundleVersion: 0.85
+  bundleVersion: 1.01
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
   xboxOneDisableKinectGpuReservation: 0
@@ -180,7 +180,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: e72722eb26329bb429de001f8a33c816, type: 3}
+      m_Icon: {fileID: 2800000, guid: 1678d82daa6703a408b57906f834b1ef, type: 3}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching: []
