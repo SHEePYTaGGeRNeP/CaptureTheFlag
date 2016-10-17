@@ -2451,7 +2451,7 @@ MonoBehaviour:
   selectChoiceButton: {fileID: 363653699}
   possumReviveButton: {fileID: 0}
   selectAnimalText: {fileID: 0}
-  selectRPSText: {fileID: 0}
+  selectRPSText: {fileID: 217684610}
   snakeText: {fileID: 0}
   teamImage: {fileID: 1836655019}
   classImage: {fileID: 935370976}
@@ -4598,7 +4598,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1355734571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5895,7 +5895,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000011165334696, guid: 50b5f63c90740b6489a4ef521b9d3da8, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114000010162665780, guid: 50b5f63c90740b6489a4ef521b9d3da8,
         type: 2}

@@ -316,5 +316,6 @@ public class UIManager : MonoBehaviour
     public void SetChoice(int id)
     {
         Game.Player.Choice = (Choice)id;
+        selectRPSText.text = Helpers.RPSToString(Game.Player.Choice);
     }
 }
