@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
 {
 
     public List<GameObject> Menus = new List<GameObject>();
-    
+
     public Text selectTeamText;
     public Button selectTeamButton;
 
@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
 
     public Button selectChoiceButton;
     public Button possumReviveButton;
+    
     public Text selectAnimalText;
     public Text selectRPSText;
     public Text snakeText;
@@ -43,23 +44,23 @@ public class UIManager : MonoBehaviour
     public Button scanButton;
     public Text scanButtonText;
     public bool scannerActive;
-    
-    
+
+
     public qrCam qrcam;
 
     public Sprite[] rpsSprites;
-    
+
     public GameManager Game;
 
     private bool battleCanvas;
     private bool respawnCanvas;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         Game = transform.GetComponent<GameManager>();
     }
-	
+
 
     public void ShowMenu(int index)
     {
@@ -69,17 +70,17 @@ public class UIManager : MonoBehaviour
     public void ShowMenu(string name)
     {
         GameObject menu = null;
-        foreach( GameObject m in Menus)
+        foreach (GameObject m in Menus)
         {
             if (m.name == name)
-                 menu = m;
-        }   
+                menu = m;
+        }
         ShowMenu(menu, true);
     }
 
     public void ShowMenu(GameObject menu, bool hideOther)
     {
-        HideMenus();     
+        HideMenus();
         menu.SetActive(true);
 
     }
@@ -95,7 +96,7 @@ public class UIManager : MonoBehaviour
 
     public void goToTitleMenu()
     {
-       ShowMenu(0);
+        ShowMenu(0);
     }
 
     public void goToInfo()
@@ -105,7 +106,7 @@ public class UIManager : MonoBehaviour
 
     public void goToTeamSelect()
     {
-       selectTeamText.text = "";
+        selectTeamText.text = "";
         selectTeamButton.interactable = false;
         ShowMenu(2);
         //currentMenuScreen = 2;
@@ -129,8 +130,10 @@ public class UIManager : MonoBehaviour
     public void goToFightScreen()
     {
         battleCanvas = true;
-        SlangButton.gameObject.SetActive(false);
-        InfoStuff.SetActive(true);
+        if (SlangButton != null)
+            SlangButton.gameObject.SetActive(false);
+        if (InfoStuff != null)
+            InfoStuff.SetActive(true);
         ShowMenu(6);
         teamImage.sprite = Game.Player.team.image;
         classImage.sprite = Game.Player.clas.image;
@@ -167,7 +170,8 @@ public class UIManager : MonoBehaviour
         QrCode.gameObject.SetActive(false);
         scanButtonText.text = "Terug";
         BuidelratButton.gameObject.SetActive(false);
-        SlangButton.gameObject.SetActive(false);
+        if (SlangButton != null)
+            SlangButton.gameObject.SetActive(false);
         RespawnQRCode.gameObject.SetActive(false);
         qrcam.OnQRScan += OnQRScan;
     }
@@ -205,7 +209,7 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log("battle canvas");
             Player opponent = Game.GetPlayer(text);
-            
+
             if (opponent != null)
             {
                 if (opponent.team == Game.Player.team)
@@ -245,7 +249,7 @@ public class UIManager : MonoBehaviour
             }
             else if (Game.GetTeamByTag(text) != null)
             {
-               debugText.text = "Scan de code van je eigen team.";
+                debugText.text = "Scan de code van je eigen team.";
                 RespawnWarningText.text = "Scan de code van je eigen team.";
             }
             else if (text.Contains("Player"))
@@ -291,19 +295,20 @@ public class UIManager : MonoBehaviour
         else
         {
             BuidelratButton.gameObject.SetActive(false);
-            SlangButton.gameObject.SetActive(false);
+            if (SlangButton != null)
+                SlangButton.gameObject.SetActive(false);
             BuidelratButton.enabled = false;
             RespawnInfoText.text = "Ga terug naar de startplaats van jouw team en scan de code om verder te spelen.";
         }
 
-        
+
 
     }
-    
+
 
     public void SetTeamNumber(int id)
     {
-        Game.Player.team = Game.GetTeam(id);   
+        Game.Player.team = Game.GetTeam(id);
         selectTeamButton.interactable = true;
         if (this.selectTeamText != null)
             this.selectTeamText.text = id == 1 ? "Team Oost" : "Team West";
@@ -321,5 +326,6 @@ public class UIManager : MonoBehaviour
     {
         Game.Player.Choice = (Choice)id;
         selectRPSText.text = Helpers.RPSToString(Game.Player.Choice);
+        selectChoiceButton.interactable = true;
     }
 }
