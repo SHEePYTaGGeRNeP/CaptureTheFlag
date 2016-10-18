@@ -7,13 +7,15 @@ using com.google.zxing.qrcode;
 using System.Collections;
 using System.Linq;
 using com.google.zxing.common;
+using System.Threading;
 
 public class qrCam : MonoBehaviour
 {
     public delegate void QRScanHandler(string text);
     public event QRScanHandler OnQRScan;
 
-    public string text;
+    public string qrTextResult;
+
     [SerializeField]
     private Text _debugText;
 
@@ -30,6 +32,9 @@ public class qrCam : MonoBehaviour
     private int x, y, z;
 
     private readonly QRCodeReader qrReader = new QRCodeReader();
+    private Thread qrThread;
+    private bool interruptThread;
+    private bool raiseEvent;
 
     private void OnEnable()
     {
@@ -39,6 +44,10 @@ public class qrCam : MonoBehaviour
         this.W = this.camTexture.width;
         this.H = this.camTexture.height;
         this.WxH = this.W * this.H;
+        interruptThread = false;
+        qrThread = new Thread(ThreadTick);
+        qrThread.Name = "QR THREAD";
+        qrThread.Start();
     }
 
     private void OnDisable()
@@ -48,11 +57,18 @@ public class qrCam : MonoBehaviour
         {
             this.camTexture.Pause();
         }
+        interruptThread = true;
+        if (qrThread.IsAlive)
+        {
+            qrThread.Abort();
+            Debug.Log("Interrupted thread " + qrThread.ThreadState);
+        }
     }
 
     private void OnDestroy()
     {
         Debug.Log("OnDestroy");
+        qrThread.Abort();
         this.camTexture.Stop();
     }
     private void Awake()
@@ -70,32 +86,45 @@ public class qrCam : MonoBehaviour
     private void Update()
     {
         this.c = this.camTexture.GetPixels32();
-        this.DecodeQR();
+        if (raiseEvent)
+        {
+            raiseEvent = false;
+            if (this._debugText != null)
+                this._debugText.text = qrTextResult;
+            if (OnQRScan != null)
+                OnQRScan.Invoke(qrTextResult);
+        }
+        //this.DecodeQR();
+    }
+
+    private void ThreadTick()
+    {
+        while (!interruptThread)
+        {
+            try
+            {
+                this.d = new sbyte[this.WxH];
+                this.z = 0;
+                for (this.y = this.H - 1; this.y >= 0; this.y--)
+                {
+                    for (this.x = 0; this.x < this.W; this.x++)
+                    {
+                        this.d[this.z++] = (sbyte)(((int)this.c[this.y * this.W + this.x].r) << 16 | ((int)this.c[this.y * this.W + this.x].g) << 8 | ((int)this.c[this.y * this.W + this.x].b));
+                    }
+                }
+                this.qrTextResult = this.qrReader.decode(this.d, this.W, this.H).Text;
+                raiseEvent = true;
+                
+            }
+            catch { }
+            Thread.Sleep(33);
+        }
     }
 
     private void DecodeQR()
     {
         try
         {
-            this.d = new sbyte[this.WxH];
-            this.z = 0;
-            for (this.y = this.H - 1; this.y >= 0; this.y--)
-            {
-                for (this.x = 0; this.x < this.W; this.x++)
-                {
-                    this.d[this.z++] = (sbyte)(((int)this.c[this.y * this.W + this.x].r) << 16 | ((int)this.c[this.y * this.W + this.x].g) << 8 | ((int)this.c[this.y * this.W + this.x].b));
-                }
-            }
-            // debug testing
-            string decoded = String.Empty;
-            //decoded = "1:Player:1:1:1";
-            if (String.IsNullOrEmpty(decoded))
-                decoded = this.qrReader.decode(this.d, this.W, this.H).Text;
-            if (this._debugText != null)
-                this._debugText.text = decoded;
-            if (OnQRScan != null)
-                OnQRScan.Invoke(decoded);
-            this.text = decoded;
         }
         catch
         { // ignore -> Alot of exceptions are thrown.
