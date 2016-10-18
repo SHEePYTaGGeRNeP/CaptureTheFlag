@@ -114,7 +114,7 @@ public class UIManager : MonoBehaviour
     public void goToClassSelect()
     {
         selectClassButton.interactable = false;
-        ShowMenu(3);
+        ShowMenu(4);
         //currentMenuScreen = 3;
     }
 
@@ -123,7 +123,7 @@ public class UIManager : MonoBehaviour
         respawnCanvas = false;
         battleCanvas = false;
         selectChoiceButton.interactable = false;
-        ShowMenu(4);
+        ShowMenu(5);
     }
 
     public void goToFightScreen()
@@ -131,7 +131,7 @@ public class UIManager : MonoBehaviour
         battleCanvas = true;
         SlangButton.gameObject.SetActive(false);
         InfoStuff.SetActive(true);
-        ShowMenu(5);
+        ShowMenu(6);
         teamImage.sprite = Game.Player.team.image;
         classImage.sprite = Game.Player.clas.image;
         classTitle.text = Game.Player.clas.className;
@@ -142,6 +142,10 @@ public class UIManager : MonoBehaviour
         QrCode.sprite = Game.QR.GenerateQRCode(Game.Player.ToString());
     }
 
+    public void goToFlagHideScreen()
+    {
+        ShowMenu(3);
+    }
     public void ToggleScanner()
     {
         if (!scannerActive)
@@ -267,7 +271,7 @@ public class UIManager : MonoBehaviour
     public void goToRespawnScreen()
     {
         debugText.text = "go to respawn";
-        ShowMenu(6);
+        ShowMenu(7);
         battleCanvas = false;
         respawnCanvas = true;
         RespawnQRCode.sprite = QrCode.sprite;

@@ -30,20 +30,7 @@ public class GameManager : MonoBehaviour
         //return Player;
     }
 
-    
-
-
-
-
-
-
-
-
-
-   
-
-  
-
+      
     public Team GetTeam(long teamId)
     {
         foreach (Team team in Teams)
