@@ -88,22 +88,22 @@ public class GameManager : MonoBehaviour
         currentButton.colors = cb;
     }
 
-    public void Won()
-    {
-        if (Player.clas.Id == 3) // slang
-        {
-            // this.snakeText.text =
-            //     String.Format(
-            //         "Wil je <color=#00ffffff>{0}</color> behouden of veranderen naar <color=#00ffffff>{1}</color>",
-            //         Helpers.RPSToString(selectedRPS), Helpers.RPSToString(Helpers.LosesOf(selectedRPS)));
-            // snakePanel.SetActive(true);
-        }
-        else
-        {
-            UI.goToTitleMenu();
-        }
-        //BackToSelection();
-    }
+    //public void Won()
+    //{
+    //    if (Player.clas.Id == 3) // slang
+    //    {
+    //        // this.snakeText.text =
+    //        //     String.Format(
+    //        //         "Wil je <color=#00ffffff>{0}</color> behouden of veranderen naar <color=#00ffffff>{1}</color>",
+    //        //         Helpers.RPSToString(selectedRPS), Helpers.RPSToString(Helpers.LosesOf(selectedRPS)));
+    //        // snakePanel.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        UI.goToTitleMenu();
+    //    }
+    //    //BackToSelection();
+    //}
 
     public void SnakeKeep()
     {
@@ -121,11 +121,11 @@ public class GameManager : MonoBehaviour
         //selectedRPS = Helpers.LosesOf(selectedRPS);
     }
 
-    public void Lost()
-    {
-        //possumReviveButton.gameObject.SetActive(Player.clas.Id == 0);
-        //lostPanel.SetActive(true);
-    }
+    //public void Lost()
+    //{
+    //    //possumReviveButton.gameObject.SetActive(Player.clas.Id == 0);
+    //    //lostPanel.SetActive(true);
+    //}
 
     public void Respawn()
     {

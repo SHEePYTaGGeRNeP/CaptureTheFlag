@@ -45,6 +45,8 @@ public class UIManager : MonoBehaviour
     public Text scanButtonText;
     public bool scannerActive;
 
+    public GameObject debugCanvas;
+    public Toggle debugToggle;
 
     public qrCam qrcam;
 
@@ -61,6 +63,10 @@ public class UIManager : MonoBehaviour
         Game = transform.GetComponent<GameManager>();
     }
 
+    public void OnToggleDebugChanged()
+    {
+        this.debugCanvas.SetActive(this.debugToggle.isOn);
+    }
 
     public void ShowMenu(int index)
     {

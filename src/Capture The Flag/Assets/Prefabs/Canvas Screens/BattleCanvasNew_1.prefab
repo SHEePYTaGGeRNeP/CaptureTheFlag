@@ -539,13 +539,13 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 14
     m_MaxSize: 200
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Tree
+  m_Text: Boom
 --- !u!114 &114000011515117478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -572,13 +572,13 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 200
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Bij
+  m_Text: Buidelrat
 --- !u!114 &114000011654553306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -859,8 +859,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.2205882, g: 1, b: 0.41947246, a: 1}
+    m_HighlightedColor: {r: 0.375, g: 1, b: 0.49019608, a: 1}
+    m_PressedColor: {r: 0, g: 1, b: 0.255172, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -879,23 +879,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: PlayOneShot
-        m_Mode: 2
+        m_MethodName: goToRPSChoice
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 2f8b628c6cccd204eb68474ca56631dd,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_MethodName: goToRPSChoice
-        m_Mode: 1
+        m_MethodName: PlayOneShot
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 8300000, guid: 2f8b628c6cccd204eb68474ca56631dd,
+            type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1233,8 +1233,8 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 43, y: 467}
-  m_SizeDelta: {x: 1080, y: 100}
+  m_AnchoredPosition: {x: 501, y: 469}
+  m_SizeDelta: {x: 634, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000010684410812
 RectTransform:
@@ -1324,8 +1324,8 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 52, y: 208}
-  m_SizeDelta: {x: 1080, y: 100}
+  m_AnchoredPosition: {x: 354, y: 210.99994}
+  m_SizeDelta: {x: 341, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000012924015974
 RectTransform:
@@ -1377,10 +1377,10 @@ RectTransform:
   - {fileID: 224000013876035284}
   m_Father: {fileID: 224000014196473146}
   m_RootOrder: 5
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -812, y: 159.99988}
-  m_SizeDelta: {x: 530, y: 200}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 188, y: 71}
+  m_SizeDelta: {x: 376, y: 142}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000013356058094
 RectTransform:
@@ -1460,8 +1460,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -265, y: 159.99988}
-  m_SizeDelta: {x: 530, y: 200}
+  m_AnchoredPosition: {x: -279, y: 105}
+  m_SizeDelta: {x: 558, y: 211}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000013876035284
 RectTransform:
