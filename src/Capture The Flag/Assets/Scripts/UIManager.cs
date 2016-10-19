@@ -272,6 +272,11 @@ public class UIManager : MonoBehaviour
         //throw new NotImplementedException();
     }
 
+    public void goToWinScreen()
+    {
+        ShowMenu(8);
+    }
+
     public void goToRespawnScreen()
     {
         debugText.text = "go to respawn";
