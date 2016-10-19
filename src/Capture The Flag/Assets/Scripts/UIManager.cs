@@ -274,7 +274,12 @@ public class UIManager : MonoBehaviour
 
     public void goToWinScreen()
     {
-        ShowMenu(8);
+        // ShowMenu(8);
+        if (Game.Player.clas.Id == 3)
+        {
+            SlangButton.gameObject.SetActive(true);
+            InfoStuff.SetActive(false);
+        }
     }
 
     public void goToRespawnScreen()
